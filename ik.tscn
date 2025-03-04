@@ -1,0 +1,197 @@
+[gd_scene load_steps=15 format=3 uid="uid://h60hj0p17sds"]
+
+[ext_resource type="Texture2D" uid="uid://dhkyfyiy5k8dj" path="res://materials/Checkerboard_pattern.svg.png" id="1_h1nmr"]
+[ext_resource type="PackedScene" uid="uid://c5f2s8em1pwkc" path="res://leg.tscn" id="2_3w805"]
+[ext_resource type="Script" uid="uid://dq211p6q7tknk" path="res://locomotion.gd" id="2_h1nmr"]
+[ext_resource type="Curve" uid="uid://ctf2w4qrtgyfc" path="res://curves/step_speed_curve.tres" id="3_jrmjq"]
+[ext_resource type="Script" uid="uid://ct4ed0u2ysfwr" path="res://follow_cam.gd" id="4_h1nmr"]
+[ext_resource type="Curve" uid="uid://c3mil0fin0d2f" path="res://curves/step_interval_curve.tres" id="4_vjtki"]
+[ext_resource type="Curve" uid="uid://dud4qxlxp7wnm" path="res://curves/foot_lift_curve.tres" id="6_lxqjb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kmrub"]
+albedo_color = Color(0.223103, 0.223103, 0.223103, 1)
+albedo_texture = ExtResource("1_h1nmr")
+metallic = 0.06
+metallic_specular = 0.0
+roughness = 0.28
+rim = 0.5
+rim_tint = 0.55
+uv1_scale = Vector3(600, 600, 600)
+uv1_offset = Vector3(0.08, 0, 0)
+texture_filter = 0
+distance_fade_min_distance = 36.83
+distance_fade_max_distance = 21.51
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_uoecs"]
+material = SubResource("StandardMaterial3D_kmrub")
+size = Vector2(1000, 1000)
+
+[sub_resource type="Environment" id="Environment_h1nmr"]
+background_mode = 1
+background_color = Color(0.587079, 0.587078, 0.587078, 1)
+background_energy_multiplier = 1.25
+background_canvas_max_layer = 1
+sky_rotation = Vector3(0, 0.799361, 0)
+ambient_light_sky_contribution = 0.0
+ssr_enabled = true
+ssil_intensity = 9.45
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0.501406, 0.501407, 0.501406, 1)
+fog_density = 0.0
+fog_sky_affect = 0.431
+fog_depth_begin = 17.9
+fog_depth_end = 106.6
+
+[sub_resource type="SphereMesh" id="SphereMesh_h1nmr"]
+radius = 0.15
+height = 0.3
+rings = 8
+
+[sub_resource type="Gradient" id="Gradient_h1nmr"]
+offsets = PackedFloat32Array(0.413, 0.562, 0.756)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0.474025, 0.885186, 1, 0, 0, 0, 0.0745098)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_kmrub"]
+gradient = SubResource("Gradient_h1nmr")
+width = 512
+height = 512
+fill_from = Vector2(0.713675, 0.264957)
+fill_to = Vector2(0.74359, 0.346154)
+repeat = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jrmjq"]
+albedo_color = Color(0.10748, 0.10748, 0.10748, 1)
+metallic = 0.93
+metallic_specular = 0.75
+roughness = 0.1
+emission_enabled = true
+emission_energy_multiplier = 16.24
+emission_texture = SubResource("GradientTexture2D_kmrub")
+rim_tint = 0.53
+clearcoat = 0.0
+clearcoat_roughness = 0.87
+anisotropy = 0.7
+refraction_scale = -0.09
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Plane" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -410.408)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_uoecs")
+metadata/_edit_lock_ = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_h1nmr")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.747684, 0.469901, -0.469213, 0.38783, 0.264559, 0.882948, 0.539033, -0.842141, 0.0155654, 1.62552, 41.425, -164.146)
+light_color = Color(0.937306, 0.920946, 0.981428, 1)
+light_energy = 0.877
+shadow_enabled = true
+directional_shadow_max_distance = 62.4
+sky_mode = 1
+
+[node name="Root" type="Node3D" parent="."]
+transform = Transform3D(1.00001, 0, 0, 0, 1.0002, 0, 0, 0, 1.00003, 0, 0, 0)
+script = ExtResource("2_h1nmr")
+min_stride = 0.478
+max_stride_z = 0.761
+max_stride_x = 0.324
+step_speed_curve = ExtResource("3_jrmjq")
+step_interval_curve = ExtResource("4_vjtki")
+foot_lift_curve = ExtResource("6_lxqjb")
+input_force = 0.216
+friction = 0.019
+static_friction = 0.018
+
+[node name="Body" type="CSGBox3D" parent="Root"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.905, 0)
+gi_mode = 2
+size = Vector3(0.54, 0.495, 1.33)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Root/Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18, -0.82)
+size = Vector3(0.34, 0.4, 0.47)
+
+[node name="Legs" type="Node3D" parent="Root"]
+
+[node name="LegFL" parent="Root/Legs" node_paths=PackedStringArray("step_target", "ipsilateral_leg", "contralateral_leg", "crosslateral_leg") instance=ExtResource("2_3w805")]
+step_target = NodePath("../../TargetContainer/FrontLeft")
+ipsilateral_leg = NodePath("../LegBL")
+contralateral_leg = NodePath("../LegFR")
+crosslateral_leg = NodePath("../LegBR")
+
+[node name="LegFR" parent="Root/Legs" node_paths=PackedStringArray("step_target", "ipsilateral_leg", "contralateral_leg", "crosslateral_leg") instance=ExtResource("2_3w805")]
+step_target = NodePath("../../TargetContainer/FrontRight")
+ipsilateral_leg = NodePath("../LegBR")
+contralateral_leg = NodePath("../LegFL")
+crosslateral_leg = NodePath("../LegBL")
+
+[node name="LegBL" parent="Root/Legs" node_paths=PackedStringArray("step_target", "ipsilateral_leg", "contralateral_leg", "crosslateral_leg") instance=ExtResource("2_3w805")]
+step_target = NodePath("../../TargetContainer/BackLeft")
+ipsilateral_leg = NodePath("../LegFL")
+contralateral_leg = NodePath("../LegBR")
+crosslateral_leg = NodePath("../LegFR")
+
+[node name="LegBR" parent="Root/Legs" node_paths=PackedStringArray("step_target", "ipsilateral_leg", "contralateral_leg", "crosslateral_leg") instance=ExtResource("2_3w805")]
+step_target = NodePath("../../TargetContainer/BackRight")
+ipsilateral_leg = NodePath("../LegFR")
+contralateral_leg = NodePath("../LegBL")
+crosslateral_leg = NodePath("../LegFL")
+
+[node name="TargetContainer" type="Node3D" parent="Root"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.208)
+visible = false
+
+[node name="FrontLeft" type="Marker3D" parent="Root/TargetContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.387712, 0, -0.705703)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Root/TargetContainer/FrontLeft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+transparency = 0.92
+size = Vector3(0.03, 1, 0.03)
+
+[node name="FrontRight" type="Marker3D" parent="Root/TargetContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.392, 0, -0.705343)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Root/TargetContainer/FrontRight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+transparency = 0.92
+size = Vector3(0.03, 1, 0.03)
+
+[node name="BackLeft" type="Marker3D" parent="Root/TargetContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0.649)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Root/TargetContainer/BackLeft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+transparency = 0.92
+size = Vector3(0.03, 1, 0.03)
+
+[node name="BackRight" type="Marker3D" parent="Root/TargetContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.649)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Root/TargetContainer/BackRight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+transparency = 0.92
+size = Vector3(0.03, 1, 0.03)
+
+[node name="CamPosTarget" type="Node3D" parent="Root"]
+transform = Transform3D(0.845668, 0.350699, -0.402336, -0.417701, 0.904371, -0.0896624, 0.332357, 0.243837, 0.911121, 0.680007, 2.45049, 4.75014)
+top_level = true
+
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("look_target", "position_target")]
+transform = Transform3D(0.475701, 0, 0.879607, 0, 1, 0, -0.879607, 0, 0.475701, 3.517, 3.103, 0)
+current = true
+script = ExtResource("4_h1nmr")
+look_target = NodePath("../Root")
+position_target = NodePath("../Root/CamPosTarget")
+base_fov = 60.89
+min_fov = 41.22
+
+[node name="Ball" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.648768, 0, -0.760985, 0, 1.00063, 0, 0.760985, 0, -0.648768, -10.2384, 0.150095, -13.9539)
+mesh = SubResource("SphereMesh_h1nmr")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_jrmjq")

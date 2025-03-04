@@ -1,0 +1,15 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://duth6ilh0qyh7"]
+
+[ext_resource type="Shader" uid="uid://ddjc80mraefh2" path="res://materials/checkerboard.gdshader" id="1_48hl4"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_48hl4")
+shader_parameter/uv_scale = 3000.0
+shader_parameter/checkerboard_mix = 1.0
+shader_parameter/roughness = 0.166
+shader_parameter/metallic = 0.0
+shader_parameter/specular = 0.7
+shader_parameter/distance_fade_min = 67.43
+shader_parameter/distance_fade_max = 50.24
+shader_parameter/albedo = Color(0.18, 0.18, 0.18, 1)

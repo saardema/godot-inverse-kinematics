@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://c5f2s8em1pwkc"]
+
+[ext_resource type="Script" uid="uid://bmcggguja36s2" path="res://leg.gd" id="1_q16ya"]
+[ext_resource type="Material" uid="uid://xcqypkts83ye" path="res://materials/debug.tres" id="2_0y2hm"]
+[ext_resource type="Curve" uid="uid://vatc7fvbj6jm" path="res://curves/step_y_curve.tres" id="2_q7tlh"]
+[ext_resource type="Curve" uid="uid://kbtj5mdonxr7" path="res://curves/step_xz_curve.tres" id="2_x6io2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aefak"]
+albedo_color = Color(1, 0.06, 0.06, 1)
+
+[node name="Leg" type="Node3D"]
+script = ExtResource("1_q16ya")
+stride_xz_curve = ExtResource("2_x6io2")
+stride_y_curve = ExtResource("2_q7tlh")
+
+[node name="Plant target" type="Marker3D" parent="."]
+top_level = true
+visible = false
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Plant target"]
+transform = Transform3D(0.236, 0, 0, 0, 0.236, 0, 0, 0, 0.236, -0.000110865, 0.0726999, 0.00181389)
+size = Vector3(0.15, 0.6, 0.15)
+material = ExtResource("2_0y2hm")
+
+[node name="Foot" type="Node3D" parent="."]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Foot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+material_overlay = SubResource("StandardMaterial3D_aefak")
+size = Vector3(0.165771, 0.1, 0.164062)

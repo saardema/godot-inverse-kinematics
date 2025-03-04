@@ -1,0 +1,53 @@
+[gd_scene load_steps=2 format=3 uid="uid://1okfb1qb7d60"]
+
+[ext_resource type="Script" uid="uid://bh8kcnhwpejxk" path="res://rotate_me.gd" id="1_jlm8o"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.996321, -0.0742141, 0.0428475, 2.78059e-08, 0.5, 0.866025, -0.0856951, -0.86284, 0.498161, -13.368, 1.46512, 4.88843)
+shadow_enabled = true
+
+[node name="Assembly" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6.02322)
+
+[node name="Cylinder slide" type="SliderJoint3D" parent="Assembly"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 4.304, 0)
+node_a = NodePath("../Head")
+linear_limit/lower_distance = -2.9
+
+[node name="Head joint" type="HingeJoint3D" parent="Assembly"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.4341, 0)
+node_a = NodePath("../Head")
+node_b = NodePath("../Rod")
+
+[node name="Head" type="RigidBody3D" parent="Assembly"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.14558, 0)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Assembly/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.587, 0)
+height = 1.00986
+sides = 24
+
+[node name="Rod" type="RigidBody3D" parent="Assembly"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.72646, 0)
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="Assembly/Rod"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -4.76837e-07, -0.874146)
+radius = 0.15
+height = 3.74829
+sides = 4
+
+[node name="Crankshaft" type="StaticBody3D" parent="Assembly"]
+script = ExtResource("1_jlm8o")
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="Assembly/Crankshaft"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.00151634, -1.19209e-07, -0.260402)
+radius = 1.0
+height = 0.183
+sides = 24
+
+[node name="Crank offset" type="HingeJoint3D" parent="Assembly/Crankshaft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.713, 0)
+node_a = NodePath("..")
+node_b = NodePath("../../Rod")
