@@ -35,23 +35,18 @@ var speed: float:
 
 func _ready():
 	gait_manager.step_trigger.connect(_on_step_trigger)
-
-func _on_step_trigger(index: int, gait):
-	_step_interval = gait.step_interval
-	legs[index].start_step(clamp(gait.step_duration / speed, 0.1, 0.6), gait.foot_lift)
-
 func _physics_process(dt: float):
 	acceleration = Vector3.ZERO
+	steering = 0
+	avoid_edge()
 	controls()
 	physics(dt)
 	body()
 	feet(dt)
 
-func ease_in_out_cubic(x: float):
-	return 4 * pow(x, 3) if x < 0.5 else 1 - pow(-2 * x + 2, 3) / 2
-
-func ease_in_out_sin(x: float):
-	return -(cos(PI * x) - 1) / 2
+func _on_step_trigger(index: int, gait):
+	_step_interval = gait.step_interval
+	legs[index].start_step(clamp(gait.step_duration / speed, 0.1, 0.6), gait.foot_lift)
 
 func body():
 	var relative_acceleration = acceleration.rotated(Vector3.UP, -rotation.y)
@@ -96,14 +91,12 @@ func physics(dt: float):
 	global_position += velocity * dt
 	rotate(Vector3.UP, angular_velocity * dt)
 
-
 func controls():
 	var input = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	if input:
 		if input.y < 0: input.y *= 1.6
 		acceleration += transform.basis * Vector3(input.x, 0, input.y) * input_force
 
-	steering = 0
 	if Input.is_key_pressed(KEY_Q):
 		steering += steering_force
 	if Input.is_key_pressed(KEY_E):
@@ -132,3 +125,11 @@ func _input(event: InputEvent):
 			input_force = input_force / 1.005 - 0.005
 			if input_force < 0.01:
 				input_force = 0
+
+func avoid_edge():
+	var dot = (transform.basis * Vector3.RIGHT).dot(-position)
+	var angle = (transform.basis * Vector3.FORWARD).signed_angle_to(-position, Vector3.UP)
+	if abs(position.x) > 200 or abs(position.z) > 200:
+		if abs(angle) > 1.5 and speed > 3:
+			acceleration += -position.normalized() * 7
+		steering = clamp(angle * angle * sign(angle), -.12, .12)
