@@ -1,12 +1,15 @@
-[gd_scene load_steps=15 format=3 uid="uid://h60hj0p17sds"]
+[gd_scene load_steps=19 format=3 uid="uid://h60hj0p17sds"]
 
 [ext_resource type="Texture2D" uid="uid://dhkyfyiy5k8dj" path="res://materials/Checkerboard_pattern.svg.png" id="1_h1nmr"]
-[ext_resource type="PackedScene" uid="uid://c5f2s8em1pwkc" path="res://leg.tscn" id="2_3w805"]
-[ext_resource type="Script" uid="uid://dq211p6q7tknk" path="res://locomotion.gd" id="2_h1nmr"]
-[ext_resource type="Curve" uid="uid://ctf2w4qrtgyfc" path="res://curves/step_speed_curve.tres" id="3_jrmjq"]
+[ext_resource type="PackedScene" uid="uid://ietdf2kmqn1c" path="res://creature.tscn" id="2_3w805"]
+[ext_resource type="Script" uid="uid://tyx7pm80mqs8" path="res://gait_res.gd" id="3_h1nmr"]
+[ext_resource type="Resource" uid="uid://44i7lwcnwtlu" path="res://gaits/walk_gait.tres" id="3_kmrub"]
+[ext_resource type="Resource" uid="uid://bwvdncpfwkg53" path="res://gaits/slow_walk_gait.tres" id="4_0q7im"]
 [ext_resource type="Script" uid="uid://ct4ed0u2ysfwr" path="res://follow_cam.gd" id="4_h1nmr"]
-[ext_resource type="Curve" uid="uid://c3mil0fin0d2f" path="res://curves/step_interval_curve.tres" id="4_vjtki"]
-[ext_resource type="Curve" uid="uid://dud4qxlxp7wnm" path="res://curves/foot_lift_curve.tres" id="6_lxqjb"]
+[ext_resource type="Script" uid="uid://4785bg71patm" path="res://gait_manager_res.gd" id="5_jrmjq"]
+[ext_resource type="Resource" uid="uid://sylsdxd14eui" path="res://gaits/trot_gait.tres" id="5_lxqjb"]
+[ext_resource type="Resource" uid="uid://cugry2q0tcsn5" path="res://gaits/transverse_gallop_gait.tres" id="5_vjtki"]
+[ext_resource type="Resource" uid="uid://8f3nfi5erxu4" path="res://gaits/walking_trot_gait.tres" id="6_4jk6q"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kmrub"]
 albedo_color = Color(0.223103, 0.223103, 0.223103, 1)
@@ -16,8 +19,7 @@ metallic_specular = 0.0
 roughness = 0.28
 rim = 0.5
 rim_tint = 0.55
-uv1_scale = Vector3(600, 600, 600)
-uv1_offset = Vector3(0.08, 0, 0)
+uv1_scale = Vector3(500, 500, 500)
 texture_filter = 0
 distance_fade_min_distance = 36.83
 distance_fade_max_distance = 21.51
@@ -42,6 +44,11 @@ fog_density = 0.0
 fog_sky_affect = 0.431
 fog_depth_begin = 17.9
 fog_depth_end = 106.6
+
+[sub_resource type="Resource" id="Resource_vjtki"]
+script = ExtResource("5_jrmjq")
+gaits = Array[ExtResource("3_h1nmr")]([ExtResource("4_0q7im"), ExtResource("3_kmrub"), ExtResource("6_4jk6q"), ExtResource("5_lxqjb"), ExtResource("5_vjtki")])
+metadata/_custom_type_script = "uid://4785bg71patm"
 
 [sub_resource type="SphereMesh" id="SphereMesh_h1nmr"]
 radius = 0.15
@@ -86,107 +93,32 @@ metadata/_edit_lock_ = true
 environment = SubResource("Environment_h1nmr")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.747684, 0.469901, -0.469213, 0.38783, 0.264559, 0.882948, 0.539033, -0.842141, 0.0155654, 1.62552, 41.425, -164.146)
+transform = Transform3D(-0.463425, -0.619214, 0.633886, 0.54088, 0.368963, 0.755854, -0.701916, 0.693137, 0.163934, 1.62552, 41.425, -164.146)
 light_color = Color(0.937306, 0.920946, 0.981428, 1)
 light_energy = 0.877
 shadow_enabled = true
 directional_shadow_max_distance = 62.4
 sky_mode = 1
 
-[node name="Root" type="Node3D" parent="."]
-transform = Transform3D(1.00001, 0, 0, 0, 1.0002, 0, 0, 0, 1.00003, 0, 0, 0)
-script = ExtResource("2_h1nmr")
-min_stride = 0.478
-max_stride_z = 0.761
-max_stride_x = 0.324
-step_speed_curve = ExtResource("3_jrmjq")
-step_interval_curve = ExtResource("4_vjtki")
-foot_lift_curve = ExtResource("6_lxqjb")
-input_force = 0.216
-friction = 0.019
-static_friction = 0.018
+[node name="Creature" parent="." instance=ExtResource("2_3w805")]
+max_stride_z = 1.073
+max_stride_x = 0.388
+input_force = 9.472
+friction = 0.825
+static_friction = 1.583
+auto_speed = 3.3718
+gait_manager = SubResource("Resource_vjtki")
 
-[node name="Body" type="CSGBox3D" parent="Root"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.905, 0)
-gi_mode = 2
-size = Vector3(0.54, 0.495, 1.33)
-
-[node name="CSGBox3D" type="CSGBox3D" parent="Root/Body"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18, -0.82)
-size = Vector3(0.34, 0.4, 0.47)
-
-[node name="Legs" type="Node3D" parent="Root"]
-
-[node name="LegFL" parent="Root/Legs" node_paths=PackedStringArray("step_target", "ipsilateral_leg", "contralateral_leg", "crosslateral_leg") instance=ExtResource("2_3w805")]
-step_target = NodePath("../../TargetContainer/FrontLeft")
-ipsilateral_leg = NodePath("../LegBL")
-contralateral_leg = NodePath("../LegFR")
-crosslateral_leg = NodePath("../LegBR")
-
-[node name="LegFR" parent="Root/Legs" node_paths=PackedStringArray("step_target", "ipsilateral_leg", "contralateral_leg", "crosslateral_leg") instance=ExtResource("2_3w805")]
-step_target = NodePath("../../TargetContainer/FrontRight")
-ipsilateral_leg = NodePath("../LegBR")
-contralateral_leg = NodePath("../LegFL")
-crosslateral_leg = NodePath("../LegBL")
-
-[node name="LegBL" parent="Root/Legs" node_paths=PackedStringArray("step_target", "ipsilateral_leg", "contralateral_leg", "crosslateral_leg") instance=ExtResource("2_3w805")]
-step_target = NodePath("../../TargetContainer/BackLeft")
-ipsilateral_leg = NodePath("../LegFL")
-contralateral_leg = NodePath("../LegBR")
-crosslateral_leg = NodePath("../LegFR")
-
-[node name="LegBR" parent="Root/Legs" node_paths=PackedStringArray("step_target", "ipsilateral_leg", "contralateral_leg", "crosslateral_leg") instance=ExtResource("2_3w805")]
-step_target = NodePath("../../TargetContainer/BackRight")
-ipsilateral_leg = NodePath("../LegFR")
-contralateral_leg = NodePath("../LegBL")
-crosslateral_leg = NodePath("../LegFL")
-
-[node name="TargetContainer" type="Node3D" parent="Root"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.208)
-visible = false
-
-[node name="FrontLeft" type="Marker3D" parent="Root/TargetContainer"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.387712, 0, -0.705703)
-
-[node name="CSGBox3D" type="CSGBox3D" parent="Root/TargetContainer/FrontLeft"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-transparency = 0.92
-size = Vector3(0.03, 1, 0.03)
-
-[node name="FrontRight" type="Marker3D" parent="Root/TargetContainer"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.392, 0, -0.705343)
-
-[node name="CSGBox3D2" type="CSGBox3D" parent="Root/TargetContainer/FrontRight"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-transparency = 0.92
-size = Vector3(0.03, 1, 0.03)
-
-[node name="BackLeft" type="Marker3D" parent="Root/TargetContainer"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0.649)
-
-[node name="CSGBox3D3" type="CSGBox3D" parent="Root/TargetContainer/BackLeft"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-transparency = 0.92
-size = Vector3(0.03, 1, 0.03)
-
-[node name="BackRight" type="Marker3D" parent="Root/TargetContainer"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.649)
-
-[node name="CSGBox3D4" type="CSGBox3D" parent="Root/TargetContainer/BackRight"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-transparency = 0.92
-size = Vector3(0.03, 1, 0.03)
-
-[node name="CamPosTarget" type="Node3D" parent="Root"]
-transform = Transform3D(0.845668, 0.350699, -0.402336, -0.417701, 0.904371, -0.0896624, 0.332357, 0.243837, 0.911121, 0.680007, 2.45049, 4.75014)
+[node name="CamPosTarget" type="Node3D" parent="Creature"]
+transform = Transform3D(0.845668, 0.350699, -0.402336, -0.417701, 0.904371, -0.0896624, 0.332357, 0.243837, 0.911121, -2.82, 1.87, -0.38)
 top_level = true
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("look_target", "position_target")]
 transform = Transform3D(0.475701, 0, 0.879607, 0, 1, 0, -0.879607, 0, 0.475701, 3.517, 3.103, 0)
 current = true
 script = ExtResource("4_h1nmr")
-look_target = NodePath("../Root")
-position_target = NodePath("../Root/CamPosTarget")
+look_target = NodePath("../Creature")
+position_target = NodePath("../Creature/CamPosTarget")
 base_fov = 60.89
 min_fov = 41.22
 

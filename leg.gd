@@ -10,27 +10,29 @@ extends Node3D
 @export var contralateral_leg: Node3D
 @export var crosslateral_leg: Node3D
 
-var _step_speed: float = 1.0
 var _foot_lift: float = 0.3
 var _step_start_position: Vector3
+var _step_timer: float = 0
+var _step_duration: float = 0.25
 var _linear_step_progress: float = 0
 
-var step_offset: Vector3:
-	get: return (step_target.position - foot.position)
 var is_stepping: bool = false
+var step_offset: Vector3:
+	get: return (step_target.position - foot.position - position)
 
-func start_step(speed: float, foot_lift: float):
+func start_step(duration: float, foot_lift: float):
 	if not is_stepping:
+		_step_duration = min(duration, 1)
 		_step_start_position = foot.global_position
-		_step_speed = speed
+		_step_timer = 0
 		_foot_lift = foot_lift
-		_linear_step_progress = 0
 	is_stepping = true
 
 func _physics_process(delta: float):
-	if _linear_step_progress < 1:
-		_linear_step_progress = min(1, _linear_step_progress + delta * _step_speed)
+	if _step_timer < _step_duration:
+		_step_timer += delta
 		plant_target.global_position = step_target.global_position
+		_linear_step_progress = min(_step_timer / _step_duration, 1)
 	else:
 		is_stepping = false
 

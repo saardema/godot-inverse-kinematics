@@ -1,12 +1,77 @@
-[gd_scene load_steps=6 format=3 uid="uid://c5f2s8em1pwkc"]
+[gd_scene load_steps=13 format=4 uid="uid://c5f2s8em1pwkc"]
 
 [ext_resource type="Script" uid="uid://bmcggguja36s2" path="res://leg.gd" id="1_q16ya"]
 [ext_resource type="Material" uid="uid://xcqypkts83ye" path="res://materials/debug.tres" id="2_0y2hm"]
 [ext_resource type="Curve" uid="uid://vatc7fvbj6jm" path="res://curves/step_y_curve.tres" id="2_q7tlh"]
 [ext_resource type="Curve" uid="uid://kbtj5mdonxr7" path="res://curves/step_xz_curve.tres" id="2_x6io2"]
+[ext_resource type="Script" uid="uid://bfbu6ultx7pyg" path="res://skeleton_ik_3d.gd" id="4_x6io2"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aefak"]
 albedo_color = Color(1, 0.06, 0.06, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ipl2o"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ywqbe"]
+_surfaces = [{
+"aabb": AABB(-1, -1, -1, 2, 2, 2),
+"format": 34896613377,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAACAAEAAwAEAAEABQAAAAIAAwAAAAUABAAGAAIABQACAAYAAwAHAAQAAwAFAAcABwAGAAQABwAFAAYA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("AAAAAP//AAAAAP//AAAAAAAA/////wAAAAAAAAAAAAD/////AAAAAP//AAD//wAA////////AAD//wAAAAAAAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_v5jjs"]
+resource_name = "leg_Cube_002"
+_surfaces = [{
+"aabb": AABB(-1, -1, -1, 2, 2, 2),
+"attribute_data": PackedByteArray("/1////+f/7//n////1//v/9f/7//n/9//5//v/9f/3//X/9//5//P/+f/3//X/8//1//P/+fAAD/n/8//18AAP8f/3//X/8//1//f/8f/z//n/9//9//P//f/3//n/8/"),
+"format": 34896613399,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUA"),
+"material": SubResource("StandardMaterial3D_ipl2o"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("AAAAAP//VNUAAP//AABU1QAA/////1TVAAAAAAAAVNUAAAAAAAD///////8AAP//AAD//wAA/////wAAAAD/////AAAAAFTV////////VNX/////AABU1f//AAD//1TV//8AAP///78AAP//////v/////////+/AAAAAP///78AAAAAAAD/v///AAD///+///8AAAAA/78AAAAA////v/////8AAP//AAD///////8AAP//AAD/////////////VNVU1VTVVNVU1VTVVNVU1f+//7//v/+//7//v/+//7+qKqoqqiqqKqoqqiqqKqoq/////////////////////wAA/38AAP9/AAD/fwAA/3//f/+//3//v/9//7//f/+/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_ywqbe")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7so0r"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_pbylm"]
+_surfaces = [{
+"aabb": AABB(-1, -1, -1, 2, 2, 2),
+"format": 34896613377,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAACAAEAAwAEAAEABQAAAAIAAwAAAAUABAAGAAIABQACAAYAAwAHAAQAAwAFAAcABwAGAAQABwAFAAYA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("AAAAAP//AAAAAP//AAAAAAAA/////wAAAAAAAAAAAAD/////AAAAAP//AAD//wAA////////AAD//wAAAAAAAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_eidu5"]
+resource_name = "leg_Cube_001"
+_surfaces = [{
+"aabb": AABB(-1, -1, -1, 2, 2, 2),
+"attribute_data": PackedByteArray("/1////+f/7//n////1//v/9f/7//n/9//5//v/9f/3//X/9//5//P/+f/3//X/8//1//P/+fAAD/n/8//18AAP8f/3//X/8//1//f/8f/z//n/9//9//P//f/3//n/8/"),
+"format": 34896613399,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUA"),
+"material": SubResource("StandardMaterial3D_7so0r"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("AAAAAP//VNUAAP//AABU1QAA/////1TVAAAAAAAAVNUAAAAAAAD///////8AAP//AAD//wAA/////wAAAAD/////AAAAAFTV////////VNX/////AABU1f//AAD//1TV//8AAP///78AAP//////v/////////+/AAAAAP///78AAAAAAAD/v///AAD///+///8AAAAA/78AAAAA////v/////8AAP//AAD///////8AAP//AAD/////////////VNVU1VTVVNVU1VTVVNVU1f+//7//v/+//7//v/+//7+qKqoqqiqqKqoqqiqqKqoq/////////////////////wAA/38AAP9/AAD/fwAA/3//f/+//3//v/9//7//f/+/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_pbylm")
 
 [node name="Leg" type="Node3D"]
 script = ExtResource("1_q16ya")
@@ -23,8 +88,74 @@ size = Vector3(0.15, 0.6, 0.15)
 material = ExtResource("2_0y2hm")
 
 [node name="Foot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Foot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.044, 0)
 material_overlay = SubResource("StandardMaterial3D_aefak")
 size = Vector3(0.165771, 0.1, 0.164062)
+metadata/_edit_lock_ = true
+
+[node name="Skeleton3D" type="Skeleton3D" parent="."]
+transform = Transform3D(0.283, 0, 0, 0, -0.281166, 0.032169, 0, -0.032169, -0.281166, 0, 0.889, 0.082)
+visible = false
+bones/0/name = "Bone"
+bones/0/parent = -1
+bones/0/rest = Transform3D(1, 0, 0, 0, 0.73596, -0.677025, 0, 0.677025, 0.73596, 0, 0, 0)
+bones/0/enabled = true
+bones/0/position = Vector3(0, 0, 0)
+bones/0/rotation = Quaternion(0.363345, 0, 0, 0.931655)
+bones/0/scale = Vector3(1, 1, 1)
+bones/1/name = "Bone.001"
+bones/1/parent = 0
+bones/1/rest = Transform3D(1, 0, 0, 0, 0.0407993, 0.999167, 0, -0.999167, 0.0407993, 0, 2.22427, 1.77636e-15)
+bones/1/enabled = true
+bones/1/position = Vector3(0, 2.22427, 1.77636e-15)
+bones/1/rotation = Quaternion(-0.692532, 0, 0, 0.721387)
+bones/1/scale = Vector3(1, 1, 1)
+bones/2/name = "Bone.002"
+bones/2/parent = 1
+bones/2/rest = Transform3D(1, 0, 0, 0, 1, -2.04281e-14, 0, 2.04281e-14, 1, 0, 2.04566, 1.23722e-14)
+bones/2/enabled = true
+bones/2/position = Vector3(0, 2.04566, 1.23722e-14)
+bones/2/rotation = Quaternion(1.02141e-14, 0, 0, 1)
+bones/2/scale = Vector3(1, 1, 1)
+bones/3/name = "Cube.001"
+bones/3/parent = 1
+bones/3/rest = Transform3D(0.2, 0, 0, 0, 0, 1.2, 0, -0.2, 0, 0, 1.01379, -4.37114e-08)
+bones/3/enabled = true
+bones/3/position = Vector3(0, 1.01379, -4.37114e-08)
+bones/3/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
+bones/3/scale = Vector3(0.2, 0.2, 1.2)
+bones/4/name = "Cube"
+bones/4/parent = 0
+bones/4/rest = Transform3D(0.2, 0, 0, 0, 0, 1.2, 0, -0.2, 0, 0, 1.0287, -2.0216e-08)
+bones/4/enabled = true
+bones/4/position = Vector3(0, 1.0287, -2.0216e-08)
+bones/4/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
+bones/4/scale = Vector3(0.2, 0.2, 1.2)
+
+[node name="SkeletonIK3D" type="SkeletonIK3D" parent="Skeleton3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 1.42109e-14, 0, -1.42109e-14, 1, -1.88748e-05, -0.00718069, 5.88105e-05)
+root_bone = &"Bone"
+tip_bone = &"Bone.002"
+use_magnet = true
+magnet = Vector3(-0.06, -0.05, -1.37)
+target_node = NodePath("../../Foot")
+script = ExtResource("4_x6io2")
+
+[node name="Cube_001" type="BoneAttachment3D" parent="Skeleton3D"]
+transform = Transform3D(0.2, 0, 0, 0, -0.141545, 0.847785, 0, -0.141298, -0.84927, 0, 2.3532, 0.788401)
+bone_name = "Cube.001"
+bone_idx = 3
+
+[node name="Cube_001" type="MeshInstance3D" parent="Skeleton3D/Cube_001"]
+mesh = SubResource("ArrayMesh_v5jjs")
+
+[node name="Cube" type="BoneAttachment3D" parent="Skeleton3D"]
+transform = Transform3D(0.2, 0, 0, 0, 0.135405, 0.883152, 0, -0.147192, 0.812429, 0, 0.757081, 0.696454)
+bone_name = "Cube"
+bone_idx = 4
+
+[node name="Cube" type="MeshInstance3D" parent="Skeleton3D/Cube"]
+mesh = SubResource("ArrayMesh_eidu5")
