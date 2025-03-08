@@ -1,0 +1,204 @@
+[gd_scene load_steps=7 format=3 uid="uid://ietdf2kmqn1c"]
+
+[ext_resource type="Script" uid="uid://dq211p6q7tknk" path="res://scripts/locomotion.gd" id="1_frg5k"]
+[ext_resource type="Script" uid="uid://cldl3ckjehctl" path="res://scripts/body.gd" id="2_1k0n7"]
+[ext_resource type="Resource" uid="uid://csosa0ktie35a" path="res://gaits/gait_manager.tres" id="2_w7hms"]
+[ext_resource type="PackedScene" uid="uid://c5f2s8em1pwkc" path="res://leg.tscn" id="5_e7i2r"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1k0n7"]
+albedo_color = Color(0.43712, 0.43712, 0.43712, 1)
+metallic = 0.12
+metallic_specular = 0.04
+roughness = 0.37
+
+[sub_resource type="Curve3D" id="Curve3D_1k0n7"]
+bake_interval = 1.0
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, -0.462, 0, 0, 0.845058, 0, 0, 0.37, 0, 0, 0, 0, 0, -0.511307),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+up_vector_enabled = false
+
+[node name="Root" type="Node3D" node_paths=PackedStringArray("leg_fl", "leg_fr", "leg_bl", "leg_br")]
+script = ExtResource("1_frg5k")
+max_stride_z = 1.012
+max_stride_x = 0.21
+leg_fl = NodePath("Legs/LegFL")
+leg_fr = NodePath("Legs/LegFR")
+leg_bl = NodePath("Legs/LegBL")
+leg_br = NodePath("Legs/LegBR")
+input_force = 6.395
+steering_force = 18.133
+friction = 2.667
+static_friction = 1.218
+auto_speed = 1.0
+gait_manager = ExtResource("2_w7hms")
+
+[node name="Body" type="Node3D" parent="." node_paths=PackedStringArray("leg_fl", "leg_fr", "leg_bl", "leg_br", "body_parts")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.61, 0)
+script = ExtResource("2_1k0n7")
+hip_influence = 0.556
+shoulder_influence = 0.432
+leg_fl = NodePath("../Legs/LegFL")
+leg_fr = NodePath("../Legs/LegFR")
+leg_bl = NodePath("../Legs/LegBL")
+leg_br = NodePath("../Legs/LegBR")
+body_parts = [NodePath("BodyMeshes/Node3D5"), NodePath("BodyMeshes/Node3D6"), NodePath("BodyMeshes/Node3D4"), NodePath("BodyMeshes/Node3D3"), NodePath("BodyMeshes/Node3D2"), NodePath("BodyMeshes/Node3D")]
+offsets = Array[float]([1.2, 0.946, 0.705, 0.488, 0.228, 0.0])
+hips_spring = 230.311
+hips_damper = 135.703
+hips_mass = 8.233
+shoulders_spring = 1807.51
+shoulders_damper = 46.609
+shoulders_mass = 6.928
+shoulders_gravity = 1.08
+
+[node name="BodyMeshes" type="Node3D" parent="Body"]
+
+[node name="Node3D5" type="Node3D" parent="Body/BodyMeshes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.354942)
+
+[node name="Shoulders" type="CSGPolygon3D" parent="Body/BodyMeshes/Node3D5"]
+transform = Transform3D(0.64, 0, 0, 0, 0.64, 0, 0, 0, 0.64, 0, 0, 0)
+transparency = 0.84
+calculate_tangents = false
+polygon = PackedVector2Array(-0.373113, -0.224102, -0.367031, 0.163281, -0.241646, 0.349954, 0.00118788, 0.375044, 0.212913, 0.354364, 0.378259, 0.158134, 0.356738, -0.219891, -0.00257315, -0.350422)
+depth = 0.32
+material = SubResource("StandardMaterial3D_1k0n7")
+
+[node name="Node3D6" type="Node3D" parent="Body/BodyMeshes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.100942)
+
+[node name="Chest" type="CSGPolygon3D" parent="Body/BodyMeshes/Node3D6"]
+transform = Transform3D(0.64, 0, 0, 0, 0.64, 0, 0, 0, 0.64, 0, 0, 0)
+transparency = 0.84
+calculate_tangents = false
+polygon = PackedVector2Array(-0.275912, -0.276594, -0.280361, 0.126746, -0.209552, 0.340578, 0.00118788, 0.375044, 0.212913, 0.354364, 0.354428, 0.12455, 0.237924, -0.322287, 0.019637, -0.374967)
+depth = 0.39
+material = SubResource("StandardMaterial3D_1k0n7")
+
+[node name="Node3D4" type="Node3D" parent="Body/BodyMeshes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.140058)
+
+[node name="Chest2" type="CSGPolygon3D" parent="Body/BodyMeshes/Node3D4"]
+transform = Transform3D(0.64, 0, 0, 0, 0.64, 0, 0, 0, 0.64, 0, 0, 0)
+transparency = 0.84
+calculate_tangents = false
+polygon = PackedVector2Array(-0.278915, -0.276643, -0.291392, 0.135299, -0.209552, 0.340578, 0.00118788, 0.375044, 0.212913, 0.354364, 0.330736, 0.134628, 0.250985, -0.309935, 0.00766517, -0.395152)
+depth = 0.37
+material = SubResource("StandardMaterial3D_1k0n7")
+
+[node name="Node3D3" type="Node3D" parent="Body/BodyMeshes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.357058)
+
+[node name="Belly" type="CSGPolygon3D" parent="Body/BodyMeshes/Node3D3"]
+transform = Transform3D(0.64, 0, 0, 0, 0.64, 0, 0, 0, 0.64, 0, 0, 0)
+transparency = 0.84
+calculate_tangents = false
+polygon = PackedVector2Array(-0.230284, -0.23517, -0.269623, 0.129838, -0.209552, 0.340578, 0.00118788, 0.375044, 0.212913, 0.354364, 0.299572, 0.130822, 0.23173, -0.23751, -0.00879224, -0.317114)
+depth = 0.32
+material = SubResource("StandardMaterial3D_1k0n7")
+
+[node name="Node3D2" type="Node3D" parent="Body/BodyMeshes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.617058)
+
+[node name="Belly2" type="CSGPolygon3D" parent="Body/BodyMeshes/Node3D2"]
+transform = Transform3D(0.64, 0, 0, 0, 0.64, 0, 0, 0, 0.64, 0, 0, 0)
+transparency = 0.84
+calculate_tangents = false
+polygon = PackedVector2Array(-0.226017, -0.164918, -0.269623, 0.129838, -0.192438, 0.350736, 0.00118788, 0.375044, 0.212913, 0.354364, 0.305421, 0.135355, 0.252394, -0.161155, 0.0140975, -0.182753)
+depth = 0.41
+material = SubResource("StandardMaterial3D_1k0n7")
+
+[node name="Node3D" type="Node3D" parent="Body/BodyMeshes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.845058)
+
+[node name="Hips" type="CSGPolygon3D" parent="Body/BodyMeshes/Node3D"]
+transform = Transform3D(0.64, 0, 0, 0, 0.64, 0, 0, 0, 0.64, 0, 0, 0)
+transparency = 0.84
+calculate_tangents = false
+polygon = PackedVector2Array(-0.32953, -0.20099, -0.332201, 0.160258, -0.240053, 0.343219, -0.0209331, 0.372351, 0.212913, 0.354364, 0.342217, 0.182293, 0.349562, -0.178287, -0.00733622, -0.240561)
+depth = 0.34
+material = SubResource("StandardMaterial3D_1k0n7")
+
+[node name="ShoulderTarget" type="Marker3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.511)
+
+[node name="HipTarget" type="Marker3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.845058)
+
+[node name="Path3D" type="Path3D" parent="Body"]
+curve = SubResource("Curve3D_1k0n7")
+
+[node name="Legs" type="Node3D" parent="."]
+
+[node name="LegFL" parent="Legs" node_paths=PackedStringArray("step_target", "ipsilateral_leg", "contralateral_leg", "crosslateral_leg") instance=ExtResource("5_e7i2r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.727343, -1.19209e-07, -1.01883)
+step_target = NodePath("../../TargetContainer/FrontLeft")
+ipsilateral_leg = NodePath("../LegBL")
+contralateral_leg = NodePath("../LegFR")
+crosslateral_leg = NodePath("../LegBR")
+
+[node name="LegFR" parent="Legs" node_paths=PackedStringArray("step_target", "ipsilateral_leg", "contralateral_leg", "crosslateral_leg") instance=ExtResource("5_e7i2r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.72, 0, -0.957468)
+step_target = NodePath("../../TargetContainer/FrontRight")
+ipsilateral_leg = NodePath("../LegBR")
+contralateral_leg = NodePath("../LegFL")
+crosslateral_leg = NodePath("../LegBL")
+
+[node name="LegBL" parent="Legs" node_paths=PackedStringArray("step_target", "ipsilateral_leg", "contralateral_leg", "crosslateral_leg") instance=ExtResource("5_e7i2r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.500718, -2.38419e-07, 0.735799)
+step_target = NodePath("../../TargetContainer/BackLeft")
+ipsilateral_leg = NodePath("../LegFL")
+contralateral_leg = NodePath("../LegBR")
+crosslateral_leg = NodePath("../LegFR")
+
+[node name="LegBR" parent="Legs" node_paths=PackedStringArray("step_target", "ipsilateral_leg", "contralateral_leg", "crosslateral_leg") instance=ExtResource("5_e7i2r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.827923, 0, 0.6537)
+step_target = NodePath("../../TargetContainer/BackRight")
+ipsilateral_leg = NodePath("../LegFR")
+contralateral_leg = NodePath("../LegBL")
+crosslateral_leg = NodePath("../LegFL")
+
+[node name="TargetContainer" type="Node3D" parent="."]
+visible = false
+
+[node name="FrontLeft" type="Marker3D" parent="TargetContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.203, 0, -0.647)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="TargetContainer/FrontLeft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
+transparency = 0.7
+cast_shadow = 0
+size = Vector3(0.03, 0.19, 0.03)
+
+[node name="FrontRight" type="Marker3D" parent="TargetContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.21, 0, -0.641)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="TargetContainer/FrontRight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
+visible = false
+transparency = 0.7
+cast_shadow = 0
+size = Vector3(0.03, 0.19, 0.03)
+
+[node name="BackLeft" type="Marker3D" parent="TargetContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.221336, 0, 0.551)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="TargetContainer/BackLeft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
+visible = false
+transparency = 0.7
+cast_shadow = 0
+size = Vector3(0.03, 0.19, 0.03)
+
+[node name="BackRight" type="Marker3D" parent="TargetContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.21507, 0, 0.551)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="TargetContainer/BackRight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
+visible = false
+transparency = 0.7
+cast_shadow = 0
+size = Vector3(0.03, 0.19, 0.03)

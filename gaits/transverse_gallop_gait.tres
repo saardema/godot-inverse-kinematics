@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Gait" load_steps=2 format=3 uid="uid://cugry2q0tcsn5"]
+
+[ext_resource type="Script" uid="uid://tyx7pm80mqs8" path="res://scripts/gait_res.gd" id="1_d22ep"]
+
+[resource]
+script = ExtResource("1_d22ep")
+name = "Gallop"
+front_offset = 0.441
+front_right_offset = 0.057
+rear_right_offset = 0.938
+step_duration = 0.743
+step_interval = 0.521
+foot_lift = 0.409
+start_at = 3.926
+fade_out = 0.25
+metadata/_custom_type_script = "uid://tyx7pm80mqs8"

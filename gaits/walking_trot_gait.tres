@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Gait" load_steps=2 format=3 uid="uid://8f3nfi5erxu4"]
+
+[ext_resource type="Script" uid="uid://tyx7pm80mqs8" path="res://scripts/gait_res.gd" id="1_w0cb3"]
+
+[resource]
+script = ExtResource("1_w0cb3")
+name = "Walking trot"
+front_offset = 0.459
+front_right_offset = 0.531
+rear_right_offset = 0.45
+step_duration = 0.889
+step_interval = 0.559
+foot_lift = 0.488
+start_at = 2.112
+fade_out = 1.271
+metadata/_custom_type_script = "uid://tyx7pm80mqs8"

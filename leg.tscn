@@ -1,13 +1,13 @@
 [gd_scene load_steps=13 format=4 uid="uid://c5f2s8em1pwkc"]
 
-[ext_resource type="Script" uid="uid://bmcggguja36s2" path="res://leg.gd" id="1_q16ya"]
+[ext_resource type="Script" uid="uid://bmcggguja36s2" path="res://scripts/leg.gd" id="1_q16ya"]
 [ext_resource type="Material" uid="uid://xcqypkts83ye" path="res://materials/debug.tres" id="2_0y2hm"]
 [ext_resource type="Curve" uid="uid://vatc7fvbj6jm" path="res://curves/step_y_curve.tres" id="2_q7tlh"]
 [ext_resource type="Curve" uid="uid://kbtj5mdonxr7" path="res://curves/step_xz_curve.tres" id="2_x6io2"]
-[ext_resource type="Script" uid="uid://bfbu6ultx7pyg" path="res://skeleton_ik_3d.gd" id="4_x6io2"]
+[ext_resource type="Script" uid="uid://bfbu6ultx7pyg" path="res://scripts/skeleton_ik_3d.gd" id="4_x6io2"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aefak"]
-albedo_color = Color(1, 0.06, 0.06, 1)
+albedo_color = Color(6.61798e-07, 0.341395, 0.200581, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ipl2o"]
 
@@ -91,10 +91,9 @@ material = ExtResource("2_0y2hm")
 transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Foot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.044, 0)
+transform = Transform3D(0.459, 0, 0, 0, 0.459, 0, 0, 0, 0.459, 0, -0.0237515, 1.47527e-08)
 material_overlay = SubResource("StandardMaterial3D_aefak")
 size = Vector3(0.165771, 0.1, 0.164062)
-metadata/_edit_lock_ = true
 
 [node name="Skeleton3D" type="Skeleton3D" parent="."]
 transform = Transform3D(0.283, 0, 0, 0, -0.281166, 0.032169, 0, -0.032169, -0.281166, 0, 0.889, 0.082)

@@ -1,54 +1,55 @@
-[gd_scene load_steps=19 format=3 uid="uid://h60hj0p17sds"]
+[gd_scene load_steps=26 format=3 uid="uid://h60hj0p17sds"]
 
-[ext_resource type="Texture2D" uid="uid://dhkyfyiy5k8dj" path="res://materials/Checkerboard_pattern.svg.png" id="1_h1nmr"]
 [ext_resource type="PackedScene" uid="uid://ietdf2kmqn1c" path="res://creature.tscn" id="2_3w805"]
-[ext_resource type="Script" uid="uid://tyx7pm80mqs8" path="res://gait_res.gd" id="3_h1nmr"]
-[ext_resource type="Resource" uid="uid://44i7lwcnwtlu" path="res://gaits/walk_gait.tres" id="3_kmrub"]
-[ext_resource type="Resource" uid="uid://bwvdncpfwkg53" path="res://gaits/slow_walk_gait.tres" id="4_0q7im"]
-[ext_resource type="Script" uid="uid://ct4ed0u2ysfwr" path="res://follow_cam.gd" id="4_h1nmr"]
-[ext_resource type="Script" uid="uid://4785bg71patm" path="res://gait_manager_res.gd" id="5_jrmjq"]
-[ext_resource type="Resource" uid="uid://sylsdxd14eui" path="res://gaits/trot_gait.tres" id="5_lxqjb"]
-[ext_resource type="Resource" uid="uid://cugry2q0tcsn5" path="res://gaits/transverse_gallop_gait.tres" id="5_vjtki"]
-[ext_resource type="Resource" uid="uid://8f3nfi5erxu4" path="res://gaits/walking_trot_gait.tres" id="6_4jk6q"]
+[ext_resource type="Script" uid="uid://ct4ed0u2ysfwr" path="res://scripts/follow_cam.gd" id="4_h1nmr"]
+[ext_resource type="Texture2D" uid="uid://bj0vq7yerf5gp" path="res://materials/textures/prototype/Dark/texture_02.png" id="5_13ocs"]
+[ext_resource type="Texture2D" uid="uid://doo7a5j6xcom2" path="res://materials/textures/prototype/Dark/texture_01.png" id="5_jrmjq"]
+[ext_resource type="Texture2D" uid="uid://0jjv8v16462" path="res://materials/textures/Gun_Metal_Scratched_001_SD/Gun_Metal_Scratched_001_METAL.jpg" id="9_l0e23"]
+[ext_resource type="Texture2D" uid="uid://o51mb41cp4hp" path="res://materials/textures/Gun_Metal_Scratched_001_SD/Gun_Metal_Scratched_001_NORM.jpg" id="10_13ocs"]
+[ext_resource type="Texture2D" uid="uid://diswxd5txq26s" path="res://materials/textures/Gun_Metal_Scratched_001_SD/Gun_Metal_Scratched_001_ROUGH.jpg" id="11_0y1vb"]
+[ext_resource type="VoxelGIData" uid="uid://c8wcmti8hmy6p" path="res://ik.VoxelGI_data.res" id="13_13ocs"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kmrub"]
-albedo_color = Color(0.223103, 0.223103, 0.223103, 1)
-albedo_texture = ExtResource("1_h1nmr")
-metallic = 0.06
-metallic_specular = 0.0
-roughness = 0.28
-rim = 0.5
-rim_tint = 0.55
-uv1_scale = Vector3(500, 500, 500)
-texture_filter = 0
-distance_fade_min_distance = 36.83
-distance_fade_max_distance = 21.51
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_lxqjb"]
+load_path = "res://.godot/imported/aerodynamics_workshop_4k.hdr-dd6f6e686770e43f36adc7ed6e3be5f2.bptc.ctex"
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_uoecs"]
-material = SubResource("StandardMaterial3D_kmrub")
-size = Vector2(1000, 1000)
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_vjtki"]
+panorama = SubResource("CompressedTexture2D_lxqjb")
+
+[sub_resource type="Sky" id="Sky_lxqjb"]
+sky_material = SubResource("PanoramaSkyMaterial_vjtki")
 
 [sub_resource type="Environment" id="Environment_h1nmr"]
 background_mode = 1
-background_color = Color(0.587079, 0.587078, 0.587078, 1)
-background_energy_multiplier = 1.25
+background_energy_multiplier = 3.19
 background_canvas_max_layer = 1
+sky = SubResource("Sky_lxqjb")
 sky_rotation = Vector3(0, 0.799361, 0)
-ambient_light_sky_contribution = 0.0
-ssr_enabled = true
-ssil_intensity = 9.45
-fog_enabled = true
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 1.54
+tonemap_white = 0.09
+ssao_radius = 8.43
+ssil_intensity = 2.04
+sdfgi_use_occlusion = true
+sdfgi_cascades = 5
+sdfgi_min_cell_size = 4.43818
+sdfgi_cascade0_distance = 284.044
+sdfgi_max_distance = 9089.4
+sdfgi_y_scale = 0
 fog_mode = 1
 fog_light_color = Color(0.501406, 0.501407, 0.501406, 1)
 fog_density = 0.0
 fog_sky_affect = 0.431
 fog_depth_begin = 17.9
 fog_depth_end = 106.6
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0018
+volumetric_fog_albedo = Color(0.529067, 0.529067, 0.529067, 1)
 
-[sub_resource type="Resource" id="Resource_vjtki"]
-script = ExtResource("5_jrmjq")
-gaits = Array[ExtResource("3_h1nmr")]([ExtResource("4_0q7im"), ExtResource("3_kmrub"), ExtResource("6_4jk6q"), ExtResource("5_lxqjb"), ExtResource("5_vjtki")])
-metadata/_custom_type_script = "uid://4785bg71patm"
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_l0e23"]
+dof_blur_far_distance = 37.82
+dof_blur_far_transition = 16.09
+dof_blur_amount = 0.12
 
 [sub_resource type="SphereMesh" id="SphereMesh_h1nmr"]
 radius = 0.15
@@ -81,48 +82,182 @@ clearcoat_roughness = 0.87
 anisotropy = 0.7
 refraction_scale = -0.09
 
-[node name="Node3D" type="Node3D"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0q7im"]
+load_path = "res://.godot/imported/ScratchedPaintedMetal01_4K_AO.png-62c9048f9c3ad33bfee623da263713e8.s3tc.ctex"
 
-[node name="Plane" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -410.408)
-cast_shadow = 0
-mesh = SubResource("PlaneMesh_uoecs")
-metadata/_edit_lock_ = true
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_4jk6q"]
+load_path = "res://.godot/imported/ScratchedPaintedMetal01_4K_Roughness.png-d6ff9e1718c842afc2d69d404a7dfe4a.s3tc.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ce1sy"]
+load_path = "res://.godot/imported/ScratchedPaintedMetal01_4K_Height.png-e9e72ac3595f876a0bbfdf5181c3f2fa.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lxqjb"]
+albedo_color = Color(0.327299, 0.327299, 0.327299, 1)
+albedo_texture = ExtResource("5_13ocs")
+metallic = 0.4
+metallic_specular = 0.12
+metallic_texture = ExtResource("9_l0e23")
+roughness = 0.67
+roughness_texture = ExtResource("11_0y1vb")
+normal_enabled = true
+normal_scale = 0.57
+normal_texture = ExtResource("10_13ocs")
+clearcoat = 0.24
+clearcoat_roughness = 0.8
+clearcoat_texture = SubResource("CompressedTexture2D_4jk6q")
+ao_texture = SubResource("CompressedTexture2D_0q7im")
+heightmap_texture = SubResource("CompressedTexture2D_ce1sy")
+uv1_scale = Vector3(100, 100, 100)
+texture_filter = 4
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_uoecs"]
+lightmap_size_hint = Vector2i(1002, 1002)
+material = SubResource("StandardMaterial3D_lxqjb")
+add_uv2 = true
+size = Vector2(200, 200)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vjtki"]
+cull_mode = 1
+albedo_color = Color(0.321728, 0.321728, 0.321728, 1)
+albedo_texture = ExtResource("5_jrmjq")
+uv1_scale = Vector3(-150, 20, 1)
+uv1_world_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_h1nmr"]
+lightmap_size_hint = Vector2i(1004, 706)
+material = SubResource("StandardMaterial3D_vjtki")
+add_uv2 = true
+size = Vector3(100, 20, 100)
+
+[sub_resource type="Curve3D" id="Curve3D_13ocs"]
+closed = true
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -0.146141, 0, -37.3637, 0, 0, 0, 0, 0, 0, 15.4288, 0, -36.7639, 0, 0, 0, 0, 0, 0, 27.767, 0, -30.495, 0, 0, 0, 0, 0, 0, 34.2486, 0, -13.3836, 0, 0, 0, 0, 0, 0, 34.2338, 0, 1.06135, 0, 0, 0, 0, 0, 0, 29.4461, 0, 16.4321, 0, 0, 0, 0, 0, 0, 19.4856, 0, 26.4517, 0, 0, 0, 0, 0, 0, 10.7236, 0, 30.5363, 0, 0, 0, 0, 0, 0, -0.0487137, 0, 31.177, 0, 0, 0, 0, 0, 0, -12.5734, 0, 27.5645, 0, 0, 0, 0, 0, 0, -23.4802, 0, 21.7265, 0, 0, 0, 0, 0, 0, -30.5327, 0, 10.186, 0, 0, 0, 0, 0, 0, -32.5897, 0, -3.40999, 0, 0, 0, 0, 0, 0, -30.2632, 0, -17.0654, 0, 0, 0, 0, 0, 0, -23.2197, 0, -27.1576, 0, 0, 0, 0, 0, 0, -12.2792, -0.681614, -35.4099),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 16
+
+[node name="Node3D" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_h1nmr")
+camera_attributes = SubResource("CameraAttributesPractical_l0e23")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.463425, -0.619214, 0.633886, 0.54088, 0.368963, 0.755854, -0.701916, 0.693137, 0.163934, 1.62552, 41.425, -164.146)
-light_color = Color(0.937306, 0.920946, 0.981428, 1)
-light_energy = 0.877
-shadow_enabled = true
-directional_shadow_max_distance = 62.4
-sky_mode = 1
-
-[node name="Creature" parent="." instance=ExtResource("2_3w805")]
-max_stride_z = 1.073
-max_stride_x = 0.388
-input_force = 9.472
-friction = 1.557
-static_friction = 0.776
-auto_speed = 3.1329
-gait_manager = SubResource("Resource_vjtki")
+[node name="Creature" parent="." node_paths=PackedStringArray("path") instance=ExtResource("2_3w805")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.094785, 0, -34.6177)
+path = NodePath("../Path3D")
 
 [node name="CamPosTarget" type="Node3D" parent="Creature"]
-transform = Transform3D(0.845668, 0.350699, -0.402336, -0.417701, 0.904371, -0.0896624, 0.332357, 0.243837, 0.911121, 3.36, 1.12, 0)
+transform = Transform3D(1.00004, 0, 0, 0, 1.00017, 0, 0, 0, 1.00003, 0, 4.05, 0)
+top_level = true
+
+[node name="CamLookTarget" type="Node3D" parent="Creature"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.46, 0)
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("look_target", "position_target")]
 transform = Transform3D(0.475701, 0, 0.879607, 0, 1, 0, -0.879607, 0, 0.475701, 3.517, 3.103, 0)
 current = true
 script = ExtResource("4_h1nmr")
-look_target = NodePath("../Creature")
+look_target = NodePath("../Creature/CamLookTarget")
 position_target = NodePath("../Creature/CamPosTarget")
-base_fov = 60.89
-min_fov = 41.22
+base_fov = 67.78
+min_fov = 5.82
 
 [node name="Ball" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.648768, 0, -0.760985, 0, 1.00063, 0, 0.760985, 0, -0.648768, 0, 0, 0)
+transform = Transform3D(-0.648768, 0, -0.760985, 0, 1.00063, 0, 0.760985, 0, -0.648768, 0, 0.15, 0)
+visible = false
 mesh = SubResource("SphereMesh_h1nmr")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_jrmjq")
+
+[node name="Building" type="Node3D" parent="."]
+
+[node name="Floor" type="MeshInstance3D" parent="Building"]
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_uoecs")
+skeleton = NodePath("../..")
+metadata/_edit_lock_ = true
+
+[node name="Walls" type="MeshInstance3D" parent="Building"]
+transform = Transform3D(1, 6.67917e-05, -2.03086e-05, -6.67917e-05, 1, 5.54511e-07, 2.03086e-05, -5.53155e-07, 1, 0, 0, 0)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_h1nmr")
+skeleton = NodePath("../..")
+metadata/_edit_lock_ = true
+
+[node name="Lights" type="Node3D" parent="."]
+
+[node name="OmniLight3D4" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.9781, 6.282, 22.9686)
+light_color = Color(0.910507, 0.8924, 0.97, 1)
+light_energy = 512.732
+light_indirect_energy = 0.981
+light_volumetric_fog_energy = 1.23
+light_specular = 0.011
+shadow_enabled = true
+omni_range = 4096.0
+omni_attenuation = 1.883
+
+[node name="OmniLight3D6" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0061264, 6.282, 22.9686)
+light_color = Color(0.8924, 0.92732, 0.97, 1)
+light_energy = 512.732
+light_indirect_energy = 0.981
+light_volumetric_fog_energy = 1.23
+light_specular = 0.011
+shadow_enabled = true
+omni_range = 4096.0
+omni_attenuation = 1.883
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.6535, 6.282, 23.7107)
+light_color = Color(0.93896, 0.8924, 0.97, 1)
+light_energy = 512.732
+light_indirect_energy = 0.981
+light_volumetric_fog_energy = 1.23
+light_specular = 0.011
+shadow_enabled = true
+omni_range = 4096.0
+omni_attenuation = 1.883
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.8805, 6.282, -16.3479)
+light_color = Color(0.8924, 0.94284, 0.97, 1)
+light_energy = 512.732
+light_indirect_energy = 0.981
+light_volumetric_fog_energy = 1.23
+light_specular = 0.011
+shadow_enabled = true
+omni_range = 4096.0
+omni_attenuation = 1.883
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.9781, 6.282, -16.3479)
+light_color = Color(0.910507, 0.8924, 0.97, 1)
+light_energy = 512.732
+light_indirect_energy = 0.981
+light_volumetric_fog_energy = 1.23
+light_specular = 0.011
+shadow_enabled = true
+omni_range = 4096.0
+omni_attenuation = 1.883
+
+[node name="OmniLight3D5" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0061264, 6.282, -16.3479)
+light_color = Color(0.8924, 0.920853, 0.97, 1)
+light_energy = 512.732
+light_indirect_energy = 0.981
+light_volumetric_fog_energy = 1.23
+light_specular = 0.011
+shadow_enabled = true
+omni_range = 4096.0
+omni_attenuation = 1.883
+
+[node name="VoxelGI" type="VoxelGI" parent="."]
+transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, 0, 5.89, 0)
+subdiv = 2
+size = Vector3(105, 12, 105)
+data = ExtResource("13_13ocs")
+
+[node name="Path3D" type="Path3D" parent="."]
+curve = SubResource("Curve3D_13ocs")

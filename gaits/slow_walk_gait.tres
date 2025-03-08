@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Gait" load_steps=3 format=3 uid="uid://bwvdncpfwkg53"]
+
+[ext_resource type="Script" uid="uid://tyx7pm80mqs8" path="res://scripts/gait_res.gd" id="1_lexwn"]
+
+[sub_resource type="Curve" id="Curve_lexwn"]
+
+[resource]
+script = ExtResource("1_lexwn")
+name = "Slow walk"
+front_offset = 0.25
+front_right_offset = 0.5
+rear_right_offset = 0.5
+step_duration = 0.247
+step_interval = 0.959
+foot_lift = 0.185
+start_at = 0.0
+fade_out = 0.362
+body_rotation_curve = SubResource("Curve_lexwn")
+metadata/_custom_type_script = "uid://tyx7pm80mqs8"

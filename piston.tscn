@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://1okfb1qb7d60"]
 
-[ext_resource type="Script" uid="uid://bh8kcnhwpejxk" path="res://rotate_me.gd" id="1_jlm8o"]
+[ext_resource type="Script" uid="uid://bh8kcnhwpejxk" path="res://scripts/rotate_me.gd" id="1_jlm8o"]
 
 [node name="Node3D" type="Node3D"]
 
