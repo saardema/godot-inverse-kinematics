@@ -4,13 +4,25 @@
 
 [resource]
 script = ExtResource("1_d22ep")
-name = "Gallop"
-front_offset = 0.441
-front_right_offset = 0.057
-rear_right_offset = 0.938
-step_duration = 0.743
-step_interval = 0.521
-foot_lift = 0.409
-start_at = 3.926
-fade_out = 0.25
+name = "Gallop 1"
+front_offset = 0.387
+front_right_offset = 0.895
+rear_right_offset = 0.889
+step_duration = 0.603
+step_interval = 0.344
+foot_lift = 0.338
+weight_shifting = 0.0
+step_target_offset = 0.129
+start_at = 4.53
+fade_out = 4.5
+hp_spring = 26.878
+hp_spring_height = 0.3
+hp_damp = 9.907
+hp_kick = 0.23545
+hp_weight_shift_offset = 0.5
+sh_spring = 29.944
+sh_spring_height = 0.469
+sh_damp = 7.868
+sh_kick = 0.14405
+sh_weight_shift_offset = 0.25
 metadata/_custom_type_script = "uid://tyx7pm80mqs8"

@@ -1,34 +1,25 @@
-[gd_scene load_steps=26 format=3 uid="uid://h60hj0p17sds"]
+[gd_scene load_steps=23 format=3 uid="uid://h60hj0p17sds"]
 
-[ext_resource type="PackedScene" uid="uid://ietdf2kmqn1c" path="res://creature.tscn" id="2_3w805"]
-[ext_resource type="Script" uid="uid://ct4ed0u2ysfwr" path="res://scripts/follow_cam.gd" id="4_h1nmr"]
-[ext_resource type="Texture2D" uid="uid://bj0vq7yerf5gp" path="res://materials/textures/prototype/Dark/texture_02.png" id="5_13ocs"]
-[ext_resource type="Texture2D" uid="uid://doo7a5j6xcom2" path="res://materials/textures/prototype/Dark/texture_01.png" id="5_jrmjq"]
-[ext_resource type="Texture2D" uid="uid://0jjv8v16462" path="res://materials/textures/Gun_Metal_Scratched_001_SD/Gun_Metal_Scratched_001_METAL.jpg" id="9_l0e23"]
-[ext_resource type="Texture2D" uid="uid://o51mb41cp4hp" path="res://materials/textures/Gun_Metal_Scratched_001_SD/Gun_Metal_Scratched_001_NORM.jpg" id="10_13ocs"]
-[ext_resource type="Texture2D" uid="uid://diswxd5txq26s" path="res://materials/textures/Gun_Metal_Scratched_001_SD/Gun_Metal_Scratched_001_ROUGH.jpg" id="11_0y1vb"]
-[ext_resource type="VoxelGIData" uid="uid://c8wcmti8hmy6p" path="res://ik.VoxelGI_data.res" id="13_13ocs"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_lxqjb"]
-load_path = "res://.godot/imported/aerodynamics_workshop_4k.hdr-dd6f6e686770e43f36adc7ed6e3be5f2.bptc.ctex"
-
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_vjtki"]
-panorama = SubResource("CompressedTexture2D_lxqjb")
-
-[sub_resource type="Sky" id="Sky_lxqjb"]
-sky_material = SubResource("PanoramaSkyMaterial_vjtki")
+[ext_resource type="Script" uid="uid://c3ldae6tgevbd" path="res://procgen.gd" id="1_ewbi0"]
+[ext_resource type="PackedScene" uid="uid://ietdf2kmqn1c" path="res://creature.tscn" id="1_pcr0m"]
+[ext_resource type="Script" uid="uid://ct4ed0u2ysfwr" path="res://scripts/follow_cam.gd" id="2_ewbi0"]
+[ext_resource type="Texture2D" uid="uid://bj0vq7yerf5gp" path="res://materials/textures/prototype/Dark/texture_02.png" id="3_2kglh"]
+[ext_resource type="Texture2D" uid="uid://0jjv8v16462" path="res://materials/textures/Gun_Metal_Scratched_001_SD/Gun_Metal_Scratched_001_METAL.jpg" id="4_ts73y"]
+[ext_resource type="Texture2D" uid="uid://o51mb41cp4hp" path="res://materials/textures/Gun_Metal_Scratched_001_SD/Gun_Metal_Scratched_001_NORM.jpg" id="5_qf5kh"]
+[ext_resource type="Texture2D" uid="uid://diswxd5txq26s" path="res://materials/textures/Gun_Metal_Scratched_001_SD/Gun_Metal_Scratched_001_ROUGH.jpg" id="6_cj5ff"]
+[ext_resource type="Texture2D" uid="uid://doo7a5j6xcom2" path="res://materials/textures/prototype/Dark/texture_01.png" id="7_uatjp"]
+[ext_resource type="VoxelGIData" uid="uid://p7csi4te1sk2" path="res://ik.VoxelGI_data.res" id="8_netr8"]
 
 [sub_resource type="Environment" id="Environment_h1nmr"]
 background_mode = 1
 background_energy_multiplier = 3.19
 background_canvas_max_layer = 1
-sky = SubResource("Sky_lxqjb")
 sky_rotation = Vector3(0, 0.799361, 0)
 ambient_light_source = 2
 ambient_light_color = Color(1, 1, 1, 1)
 ambient_light_energy = 1.54
 tonemap_white = 0.09
-ssao_radius = 8.43
+ssao_radius = 0.01
 ssil_intensity = 2.04
 sdfgi_use_occlusion = true
 sdfgi_cascades = 5
@@ -45,11 +36,6 @@ fog_depth_end = 106.6
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.0018
 volumetric_fog_albedo = Color(0.529067, 0.529067, 0.529067, 1)
-
-[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_l0e23"]
-dof_blur_far_distance = 37.82
-dof_blur_far_transition = 16.09
-dof_blur_amount = 0.12
 
 [sub_resource type="SphereMesh" id="SphereMesh_h1nmr"]
 radius = 0.15
@@ -93,15 +79,15 @@ load_path = "res://.godot/imported/ScratchedPaintedMetal01_4K_Height.png-e9e72ac
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lxqjb"]
 albedo_color = Color(0.327299, 0.327299, 0.327299, 1)
-albedo_texture = ExtResource("5_13ocs")
+albedo_texture = ExtResource("3_2kglh")
 metallic = 0.4
 metallic_specular = 0.12
-metallic_texture = ExtResource("9_l0e23")
+metallic_texture = ExtResource("4_ts73y")
 roughness = 0.67
-roughness_texture = ExtResource("11_0y1vb")
+roughness_texture = ExtResource("6_cj5ff")
 normal_enabled = true
 normal_scale = 0.57
-normal_texture = ExtResource("10_13ocs")
+normal_texture = ExtResource("5_qf5kh")
 clearcoat = 0.24
 clearcoat_roughness = 0.8
 clearcoat_texture = SubResource("CompressedTexture2D_4jk6q")
@@ -119,7 +105,7 @@ size = Vector2(200, 200)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vjtki"]
 cull_mode = 1
 albedo_color = Color(0.321728, 0.321728, 0.321728, 1)
-albedo_texture = ExtResource("5_jrmjq")
+albedo_texture = ExtResource("7_uatjp")
 uv1_scale = Vector3(-150, 20, 1)
 uv1_world_triplanar = true
 
@@ -132,40 +118,48 @@ size = Vector3(100, 20, 100)
 [sub_resource type="Curve3D" id="Curve3D_13ocs"]
 closed = true
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -0.146141, 0, -37.3637, 0, 0, 0, 0, 0, 0, 15.4288, 0, -36.7639, 0, 0, 0, 0, 0, 0, 27.767, 0, -30.495, 0, 0, 0, 0, 0, 0, 34.2486, 0, -13.3836, 0, 0, 0, 0, 0, 0, 34.2338, 0, 1.06135, 0, 0, 0, 0, 0, 0, 29.4461, 0, 16.4321, 0, 0, 0, 0, 0, 0, 19.4856, 0, 26.4517, 0, 0, 0, 0, 0, 0, 10.7236, 0, 30.5363, 0, 0, 0, 0, 0, 0, -0.0487137, 0, 31.177, 0, 0, 0, 0, 0, 0, -12.5734, 0, 27.5645, 0, 0, 0, 0, 0, 0, -23.4802, 0, 21.7265, 0, 0, 0, 0, 0, 0, -30.5327, 0, 10.186, 0, 0, 0, 0, 0, 0, -32.5897, 0, -3.40999, 0, 0, 0, 0, 0, 0, -30.2632, 0, -17.0654, 0, 0, 0, 0, 0, 0, -23.2197, 0, -27.1576, 0, 0, 0, 0, 0, 0, -12.2792, -0.681614, -35.4099),
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -0.0359039, 0, -38.1353, 0, 0, 0, 0, 0, 0, 15.4288, 0, -36.7639, 0, 0, 0, 0, 0, 0, 28.2079, 0, -26.9675, 0, 0, 0, 0, 0, 0, 34.2486, 0, -13.3836, 0, 0, 0, 0, 0, 0, 34.2338, 0, 1.06135, 0, 0, 0, 0, 0, 0, 29.4461, 0, 16.4321, 0, 0, 0, 0, 0, 0, 19.4856, 0, 26.4517, 0, 0, 0, 0, 0, 0, 10.7236, 0, 30.5363, 0, 0, 0, 0, 0, 0, -0.0487137, 0, 31.177, 0, 0, 0, 0, 0, 0, -12.5734, 0, 27.5645, 0, 0, 0, 0, 0, 0, -23.4802, 0, 21.7265, 0, 0, 0, 0, 0, 0, -30.5327, 0, 10.186, 0, 0, 0, 0, 0, 0, -32.5897, 0, -3.40999, 0, 0, 0, 0, 0, 0, -30.2632, 0, -17.0654, 0, 0, 0, 0, 0, 0, -23.8811, 0, -27.819, 0, 0, 0, 0, 0, 0, -12.9604, 0, -36.1816),
 "tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 }
 point_count = 16
 
-[node name="Node3D" type="Node3D"]
+[node name="World" type="Node3D"]
+script = ExtResource("1_ewbi0")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_h1nmr")
-camera_attributes = SubResource("CameraAttributesPractical_l0e23")
 
-[node name="Creature" parent="." node_paths=PackedStringArray("path") instance=ExtResource("2_3w805")]
+[node name="Creature" parent="." node_paths=PackedStringArray("path") instance=ExtResource("1_pcr0m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.094785, 0, -34.6177)
 path = NodePath("../Path3D")
 
 [node name="CamPosTarget" type="Node3D" parent="Creature"]
-transform = Transform3D(1.00004, 0, 0, 0, 1.00017, 0, 0, 0, 1.00003, 0, 4.05, 0)
-top_level = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.015, 3.04)
 
 [node name="CamLookTarget" type="Node3D" parent="Creature"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.46, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.61, 0)
 
-[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("look_target", "position_target")]
-transform = Transform3D(0.475701, 0, 0.879607, 0, 1, 0, -0.879607, 0, 0.475701, 3.517, 3.103, 0)
+[node name="TripodCam" type="Camera3D" parent="." node_paths=PackedStringArray("look_target")]
+transform = Transform3D(0.475701, 0, 0.879607, 0, 1, 0, -0.879607, 0, 0.475701, 0, 1.003, 0)
 current = true
-script = ExtResource("4_h1nmr")
+script = ExtResource("2_ewbi0")
+look_target = NodePath("../Creature/CamLookTarget")
+base_fov = 75.54
+min_zoom_distance = 6.01
+min_fov = 6.8
+
+[node name="FollowCam" type="Camera3D" parent="." node_paths=PackedStringArray("look_target", "position_target")]
+transform = Transform3D(0.475701, 0, 0.879607, 0, 1, 0, -0.879607, 0, 0.475701, 0, 2.14825, 0)
+current = true
+script = ExtResource("2_ewbi0")
 look_target = NodePath("../Creature/CamLookTarget")
 position_target = NodePath("../Creature/CamPosTarget")
-base_fov = 67.78
-min_fov = 5.82
+base_fov = 58.415
+min_zoom_distance = 6.01
+min_fov = 6.8
 
 [node name="Ball" type="MeshInstance3D" parent="."]
 transform = Transform3D(-0.648768, 0, -0.760985, 0, 1.00063, 0, 0.760985, 0, -0.648768, 0, 0.15, 0)
-visible = false
 mesh = SubResource("SphereMesh_h1nmr")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_jrmjq")
@@ -254,10 +248,11 @@ omni_range = 4096.0
 omni_attenuation = 1.883
 
 [node name="VoxelGI" type="VoxelGI" parent="."]
-transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, 0, 5.89, 0)
-subdiv = 2
-size = Vector3(105, 12, 105)
-data = ExtResource("13_13ocs")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.81554, 0)
+subdiv = 3
+size = Vector3(105, 14.1489, 105)
+data = ExtResource("8_netr8")
 
 [node name="Path3D" type="Path3D" parent="."]
+transform = Transform3D(2.405, 0, 0, 0, 2.405, 0, 0, 0, 2.405, -1.12389, 0, 8.99131)
 curve = SubResource("Curve3D_13ocs")

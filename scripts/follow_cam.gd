@@ -18,7 +18,9 @@ func look_at_target():
 
 	var distance = global_position.distance_to(look_target.global_position)
 	if distance > min_zoom_distance:
-		fov = max(min_fov, base_fov - (distance - min_zoom_distance) * 5)
+		var dist_smoothed = smoothstep(0, 40, (distance - min_zoom_distance))
+		dist_smoothed = pow(dist_smoothed, 0.3)
+		fov = remap(dist_smoothed, 0, 1, base_fov, min_fov)
 	else:
 		fov = base_fov
 

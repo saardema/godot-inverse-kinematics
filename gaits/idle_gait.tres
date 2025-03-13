@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="Gait" load_steps=2 format=3 uid="uid://cn5brck1wihn7"]
+
+[ext_resource type="Script" uid="uid://tyx7pm80mqs8" path="res://scripts/gait_res.gd" id="1_rm8js"]
+
+[resource]
+script = ExtResource("1_rm8js")
+name = "Idle"
+front_offset = 0.25
+front_right_offset = 0.5
+rear_right_offset = 0.5
+step_duration = 0.301
+step_interval = 3.0
+foot_lift = 0.101
+weight_shifting = 0.0
+step_target_offset = 0.0
+start_at = 0.0
+fade_out = 0.5
+hp_spring = 50.0
+hp_spring_height = 0.123
+hp_damp = 23.298
+hp_kick = 0.0
+hp_weight_shift_offset = 0.458
+sh_spring = 47.34
+sh_spring_height = 0.202
+sh_damp = 14.574
+sh_kick = 0.1
+sh_weight_shift_offset = 0.489
+metadata/_custom_type_script = "uid://tyx7pm80mqs8"

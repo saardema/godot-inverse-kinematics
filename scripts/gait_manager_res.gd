@@ -10,7 +10,7 @@ var clock: float
 var current_gait: Gait = Gait.new()
 
 func sync(tick: float, speed: float):
-	clock += tick
+	clock += tick * current_gait.step_interval * speed
 
 	if clock > 1 and not _step_tracker.has(false):
 		clock = fmod(clock, 1)
@@ -56,21 +56,7 @@ func _update_gait(speed: float):
 		DebugOverlay.write('Fade', fade)
 		DebugOverlay.write('Gait', '%s -> %s' % [updated_gait.name, next_gait.name])
 
-		current_gait.front_offset = updated_gait.front_offset * (1 - fade) + next_gait.front_offset * fade
-		current_gait.front_right_offset = updated_gait.front_right_offset * (1 - fade) + next_gait.front_right_offset * fade
-		current_gait.rear_right_offset = updated_gait.rear_right_offset * (1 - fade) + next_gait.rear_right_offset * fade
-		current_gait.step_duration = updated_gait.step_duration * (1 - fade) + next_gait.step_duration * fade
-		current_gait.step_interval = updated_gait.step_interval * (1 - fade) + next_gait.step_interval * fade
-		current_gait.foot_lift = updated_gait.foot_lift * (1 - fade) + next_gait.foot_lift * fade
-		current_gait.body_rotation = updated_gait.body_rotation_curve.sample(fmod(clock, 1)) * (1 - fade) + next_gait.body_rotation_curve.sample(fmod(clock, 1)) * fade
-		current_gait.body_y = updated_gait.body_y_curve.sample(fmod(clock, 1)) * (1 - fade) + next_gait.body_y_curve.sample(fmod(clock, 1)) * fade
+		current_gait = updated_gait.lerp(next_gait, fade)
 
 	else:
-		current_gait.front_offset = updated_gait.front_offset
-		current_gait.front_right_offset = updated_gait.front_right_offset
-		current_gait.rear_right_offset = updated_gait.rear_right_offset
-		current_gait.step_duration = updated_gait.step_duration
-		current_gait.step_interval = updated_gait.step_interval
-		current_gait.foot_lift = updated_gait.foot_lift
-		current_gait.body_rotation = updated_gait.body_rotation_curve.sample(fmod(clock, 1))
-		current_gait.body_y = updated_gait.body_y_curve.sample(fmod(clock, 1))
+		current_gait = updated_gait

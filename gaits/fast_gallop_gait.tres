@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="Gait" load_steps=2 format=3 uid="uid://cv2i7qmc0l7ix"]
+
+[ext_resource type="Script" uid="uid://tyx7pm80mqs8" path="res://scripts/gait_res.gd" id="1_c710t"]
+
+[resource]
+script = ExtResource("1_c710t")
+name = "Fast Gallop"
+front_offset = 0.404
+front_right_offset = 0.895
+rear_right_offset = 0.889
+step_duration = 0.99
+step_interval = 0.246
+foot_lift = 0.479
+weight_shifting = 0.0
+step_target_offset = 0.07
+start_at = 10.0
+fade_out = 5.5
+hp_spring = 36.003
+hp_spring_height = 0.231
+hp_damp = 13.197
+hp_kick = 0.1934
+hp_weight_shift_offset = 0.5
+sh_spring = 46.566
+sh_spring_height = 0.112
+sh_damp = 14.202
+sh_kick = 0.1835
+sh_weight_shift_offset = 0.25
+metadata/_custom_type_script = "uid://tyx7pm80mqs8"

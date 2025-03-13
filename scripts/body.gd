@@ -1,6 +1,10 @@
 extends Node3D
 @export_range(0, 2) var hip_influence: float
 @export_range(0, 2) var shoulder_influence: float
+@export var pelvic_rotation: Vector3
+@export var pelvic_rotation_origin: Vector3
+
+@export var shoulder_rotation: Vector3
 
 @export var leg_fl: Node3D
 @export var leg_fr: Node3D
@@ -11,45 +15,16 @@ extends Node3D
 
 @onready var shoulder_target: Marker3D = $ShoulderTarget
 @onready var hip_target: Marker3D = $HipTarget
-@onready var path: Path3D = $Path3D
+@onready var path: Path3D = $Spine
 
-@export_group('Hips suspension')
-var hips_spring_damper: SpringDamper
-@export_range(0, 5000) var hips_spring: float=10:
-	set(value):
-		hips_spring = value
-		if hips_spring_damper: hips_spring_damper.r = value
-@export_range(0, 1000) var hips_damper: float = 1:
-	set(value):
-		hips_damper = value
-		if hips_spring_damper: hips_spring_damper.k = value
-@export_range(1, 100) var hips_mass: float=10:
-	set(value):
-		hips_mass = value
-		if hips_spring_damper: hips_spring_damper.m = value
-
-@export_group('Shoulders suspension')
-var shoulders_spring_damper: SpringDamper
-@export_range(0, 5000) var shoulders_spring: float=10:
-	set(value):
-		shoulders_spring = value
-		if shoulders_spring_damper: shoulders_spring_damper.r = value
-@export_range(0, 1000) var shoulders_damper: float = 1:
-	set(value):
-		shoulders_damper = value
-		if shoulders_spring_damper: shoulders_spring_damper.k = value
-@export_range(1, 100) var shoulders_mass: float = 10:
-	set(value):
-		shoulders_mass = value
-		if shoulders_spring_damper: shoulders_spring_damper.m = value
-@export_range(0, 1000) var shoulders_gravity: float:
-	set(value):
-		shoulders_gravity = value
-		if shoulders_spring_damper: shoulders_spring_damper.g = value
+var hips_acceleration_y: float = 0
+var hips_velocity_y: float = 0
+@export var hips_gravity: float = 30
+var shoulders_acceleration_y: float = 0
+var shoulders_velocity_y: float = 0
+@export var shoulders_gravity: float = 30
 
 func _ready():
-	hips_spring_damper = SpringDamper.new(hips_spring, hips_damper, hips_mass)
-	shoulders_spring_damper = SpringDamper.new(shoulders_spring, shoulders_damper, shoulders_mass, shoulders_gravity)
 	offsets.resize(body_parts.size())
 
 func _curve_spine():
@@ -62,76 +37,118 @@ func _curve_spine():
 		var part = body_parts[n]
 		var offset = offsets[n]
 		part.transform = path.curve.sample_baked_with_rotation(offset)
-		var normalized_offset = offset / offsets[0]
-		part.rotate_object_local(Vector3.BACK, lerp(hip_target.rotation.z, shoulder_target.rotation.z, normalized_offset) / 3)
+		part.rotate_z(hip_target.rotation.z * max(0, 0.8 - offset))
 
-func update(dt: float, speed: float):
+func simulate_leg(leg, target_joint, joint_y_vel, spring_const, damp_const, kick_const, spring_height_const, gait, speed) -> float:
+	var force: float = 0
 
-	#var hip_force = (leg_bl.foot.position.y + leg_br.foot.position.y) / 5
-	#hip_force *= speed
-	#hip_target.position.y = hips_spring_damper.get_value(hip_force - hip_target.position.y, dt)
+	if not leg.is_stepping and target_joint.position.y < 0.1:
+		var compression = 1 / target_joint.global_position.distance_squared_to(leg.foot.global_position)
+		var kick_force: float = 0
+		var spring_force: float = 0
+		var damp_force: float = max(0, -joint_y_vel * damp_const * 1.5)
 
-	var interpolation = 0
-	if not leg_fl.is_stepping: interpolation += 0.5
-	if not leg_fr.is_stepping: interpolation += 0.5
+		if joint_y_vel < 3:
+			kick_force = pow(max(0, -leg.step_offset.z * gait.step_interval * 15), 2) * kick_const * speed
+			spring_force = max(0, -target_joint.position.y + spring_height_const) * spring_const * 1.5
 
-	var shoulder_force = min(0.5, pow(min(0, leg_fr.step_offset.z), 8))
-	shoulder_force *= speed * 0
-	shoulder_target.position.y = shoulders_spring_damper.get_value(shoulder_force - shoulder_target.position.y, dt, interpolation)
+		force += kick_force + damp_force + spring_force
 
-	DebugOverlay.write('f', shoulder_force)
+		if leg in [leg_bl, leg_fl]:
+			var dir = get_parent_node_3d().transform.basis * Vector3.FORWARD * 0.03
 
-	DebugOverlay.draw_line_3d_immediate(
-		shoulder_target.global_position,
-		shoulder_target.global_position + Vector3.UP * shoulders_spring_damper.acceleration / 20,
-		Color.GREEN
-	)
+			DebugOverlay.draw_line_3d_immediate(
+				target_joint.global_position,
+				target_joint.global_position + Vector3.UP * kick_force / 100.0,
+				Color.BLUE_VIOLET
+			)
 
-	var dir = get_parent_node_3d().transform.basis * Vector3.FORWARD * 0.02
+			DebugOverlay.draw_line_3d_immediate(
+				target_joint.global_position + dir,
+				target_joint.global_position + dir + Vector3.UP * spring_force / 100,
+				Color.GREEN
+			)
 
-	DebugOverlay.draw_line_3d_immediate(
-		shoulder_target.global_position + dir,
-		shoulder_target.global_position + dir + Vector3.UP * shoulders_spring_damper.velocity / 1,
-		Color.RED
-	)
+			DebugOverlay.draw_line_3d_immediate(
+				target_joint.global_position + dir * 2,
+				target_joint.global_position + dir * 2 + Vector3.UP * damp_force / 100,
+				Color.RED
+			)
 
-	DebugOverlay.draw_line_3d_immediate(
-		shoulder_target.global_position + dir * 2,
-		shoulder_target.global_position + dir * 2 + Vector3.UP * shoulder_target.position.y / 1,
-		Color.YELLOW
-	)
+			#DebugOverlay.draw_line_3d_immediate(
+				#target_joint.global_position + dir * 3,
+				#target_joint.global_position + dir * 3 + Vector3.UP * compression / 10,
+				#Color.YELLOW
+			#)
 
+	return force
+
+func update(dt: float, speed: float, gait: Gait, clock: float):
+	update_hips(dt, speed, gait, clock)
+	update_shoulders(dt, speed, gait, clock)
 	_curve_spine()
 
-class SpringDamper:
-	var acceleration: float
-	var velocity: float
-	var m: float
-	var r: float
-	var k: float
-	var g: float
-	var value: float
+func update_shoulders(dt: float, speed: float, gait: Gait, clock: float):
+	shoulders_acceleration_y = 0
+	var force_fl := simulate_leg(leg_fl, shoulder_target, shoulders_velocity_y, gait.sh_spring, gait.sh_damp, gait.sh_kick, gait.sh_spring_height, gait, speed)
+	var force_fr := simulate_leg(leg_fr, shoulder_target, shoulders_velocity_y, gait.sh_spring, gait.sh_damp, gait.sh_kick, gait.sh_spring_height, gait, speed)
 
-	func _init(spring: float, damper: float, mass: float = 1.0, gravity: float = 0):
-		r = spring
-		k = damper
-		m = mass
-		velocity = 0
-		acceleration = 0
-		g = gravity
+	var front_distribution: float = sin((clock + gait.sh_weight_shift_offset) * PI * 2) * gait.weight_shifting / 2 + 0.5
+	if leg_fl.is_stepping != leg_fr.is_stepping:
+		force_fl *= 1 + (1-gait.weight_shifting)
+		force_fr *= 1 + (1-gait.weight_shifting)
 
-	func get_value(deviation: float, dt: float, interpolation: float = 1) -> float:
-		acceleration = clamp((r * deviation - k * velocity) / m, 0, 100)
-		acceleration *= interpolation
-		acceleration -= g * m
-		velocity += acceleration * dt
-		value += velocity * dt
+	shoulders_acceleration_y = force_fl * front_distribution + force_fr * (1 - front_distribution)
 
-		if value < -0.4:
-			velocity = max(0, velocity)
-			acceleration = max(0, acceleration)
-		elif value > 0.4:
-			velocity = min(0, velocity)
-			acceleration = min(0, acceleration)
+	shoulders_acceleration_y += -shoulders_gravity
+	shoulders_velocity_y += shoulders_acceleration_y * dt
+	shoulder_target.position.y += shoulders_velocity_y * dt
 
-		return value
+	if shoulder_target.position.y > 0.8:
+		shoulders_acceleration_y = min(0, shoulders_acceleration_y)
+		shoulders_velocity_y = min(0, shoulders_velocity_y)
+		shoulder_target.position.y = 0.8
+
+	if shoulder_target.position.y < -0.7:
+		shoulders_acceleration_y = max(0, shoulders_acceleration_y)
+		shoulders_velocity_y = max(0, shoulders_velocity_y)
+		shoulder_target.position.y = -0.7
+
+	shoulder_target.position.x = (front_distribution - 0.5) * shoulder_rotation.z
+
+
+func update_hips(dt: float, speed: float, gait: Gait, clock: float):
+	hips_acceleration_y = 0
+	var force_bl := simulate_leg(leg_bl, hip_target, hips_velocity_y, gait.hp_spring, gait.hp_damp, gait.hp_kick, gait.hp_spring_height, gait, speed)
+	var force_br := simulate_leg(leg_br, hip_target, hips_velocity_y, gait.hp_spring, gait.hp_damp, gait.hp_kick, gait.hp_spring_height, gait, speed)
+	var rear_distribution: float = sin((clock + gait.hp_weight_shift_offset) * PI * 2 ) * gait.weight_shifting / 2 + 0.5
+
+	if leg_bl.is_stepping != leg_br.is_stepping:
+		force_bl *= 1 + (1-gait.weight_shifting)
+		force_br *= 1 + (1-gait.weight_shifting)
+	hips_acceleration_y = force_bl * rear_distribution + force_br * (1-rear_distribution)
+
+	hips_acceleration_y += -hips_gravity
+	hips_velocity_y += hips_acceleration_y * dt
+	hip_target.position.y += hips_velocity_y * dt
+
+	if hip_target.position.y > 0.8:
+		hips_acceleration_y = min(0, hips_acceleration_y)
+		hips_velocity_y = min(0, hips_velocity_y)
+		hip_target.position.y = 0.8
+
+	if hip_target.position.y < -0.8:
+		hips_acceleration_y = max(0, hips_acceleration_y)
+		hips_velocity_y = max(0, hips_velocity_y)
+		hip_target.position.y = -0.8
+
+	# Pelvic tilt
+	var ha = hip_target.position.y + position.y + 0.1
+	var hto = hip_target.position.z - ((leg_bl.foot.position.z + leg_br.foot.position.z) / 2)
+	hip_target.rotation.x = atan2(ha, hto) * pelvic_rotation.x + pelvic_rotation_origin.x
+
+	var hpo = leg_br.foot.position.z - leg_bl.foot.position.z
+	hip_target.rotation.y = sin(hpo) * pelvic_rotation.y + pelvic_rotation_origin.y
+
+	hip_target.rotation.z = (rear_distribution - 0.5) * pelvic_rotation.z
+	hip_target.position.x = (rear_distribution - 0.5) * pelvic_rotation_origin.z

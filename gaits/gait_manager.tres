@@ -1,13 +1,15 @@
-[gd_resource type="Resource" script_class="GaitManager" load_steps=7 format=3 uid="uid://csosa0ktie35a"]
+[gd_resource type="Resource" script_class="GaitManager" load_steps=9 format=3 uid="uid://csosa0ktie35a"]
 
 [ext_resource type="Script" uid="uid://tyx7pm80mqs8" path="res://scripts/gait_res.gd" id="1_g8fhm"]
 [ext_resource type="Resource" uid="uid://bwvdncpfwkg53" path="res://gaits/slow_walk_gait.tres" id="2_2e3kb"]
+[ext_resource type="Resource" uid="uid://cn5brck1wihn7" path="res://gaits/idle_gait.tres" id="2_lak0a"]
 [ext_resource type="Script" uid="uid://4785bg71patm" path="res://scripts/gait_manager_res.gd" id="2_s04ne"]
 [ext_resource type="Resource" uid="uid://44i7lwcnwtlu" path="res://gaits/walk_gait.tres" id="3_lak0a"]
 [ext_resource type="Resource" uid="uid://sylsdxd14eui" path="res://gaits/trot_gait.tres" id="5_q2w1g"]
+[ext_resource type="Resource" uid="uid://cv2i7qmc0l7ix" path="res://gaits/fast_gallop_gait.tres" id="6_461t7"]
 [ext_resource type="Resource" uid="uid://cugry2q0tcsn5" path="res://gaits/transverse_gallop_gait.tres" id="6_c5p8q"]
 
 [resource]
 script = ExtResource("2_s04ne")
-gaits = Array[ExtResource("1_g8fhm")]([ExtResource("2_2e3kb"), ExtResource("3_lak0a"), ExtResource("5_q2w1g"), ExtResource("6_c5p8q")])
+gaits = Array[ExtResource("1_g8fhm")]([ExtResource("2_lak0a"), ExtResource("2_2e3kb"), ExtResource("3_lak0a"), ExtResource("5_q2w1g"), ExtResource("6_c5p8q"), ExtResource("6_461t7")])
 metadata/_custom_type_script = "uid://4785bg71patm"
